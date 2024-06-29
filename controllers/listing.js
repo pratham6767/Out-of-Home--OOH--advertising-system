@@ -145,15 +145,34 @@ exports.getIndividualListing= async(req,res)=>{
 
 exports.destroyListing=async(req,res)=>{
     let {id}= req.params;
+    const userId = req.user.id
+
     try{
-        let deletedListing= await Addspace.findByIdAndDelete(id);
-    console.log(deletedListing);
-    res.status(200).json({
+      let listing = await Addspace.findById(id);
+
+        // Check if the listing exists
+        if (!listing) {
+            return res.status(404).json({
+                success: false,
+                message: "Listing not found"
+            });
+        }
+
+        // Check if the user is the owner of the listing
+        if (listing.Owner.toString() !== userId) {
+            return res.status(403).json({
+                success: false,
+                message: "You are not authorized to delete this listing"
+            });
+        }
+      let deletedListing= await Addspace.findByIdAndDelete(id);
+      console.log(deletedListing);
+      res.status(200).json({
         success: true,
         message:"listing deleted",
       })
     }catch(error){
-        console.log(error)
+      console.log(error)
       return res.status(404).json({
         success: false,
         message: `couldnt delete listing Data`,

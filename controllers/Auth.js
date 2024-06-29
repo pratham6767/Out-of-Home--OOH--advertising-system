@@ -1,8 +1,74 @@
 const bcrypt = require("bcryptjs")
 const User = require("../models/User")
 const jwt = require("jsonwebtoken")
-// const Profile = require("../models/profile")
+const Profile = require("../models/profile")
+const OTP = require("../models/otp");
+const otpGenerator = require("otp-generator")
+
 require("dotenv").config()
+
+exports.sendOTP=async (req,res)=>{
+  try{//fetch email
+  const {email}=req.body;
+
+  //check if user exists
+
+  const checkUserPresent= await User.findOne({email});
+
+  if(checkUserPresent){
+      return res.status(401).json({
+          success:false,
+          message:"User already registerd"
+      })
+  }
+
+  //otp generation
+  var otp=otpGenerator.generate(6,{
+      upperCaseAlphabets:false,
+      lowerCaseAlphabets:false,
+      specialChars:false,
+  });
+
+  //printing
+  console.log("otp generated",otp);
+
+  //check for unique otp
+
+  const result =await OTP.findOne({otp:otp});
+  
+  
+  //if true means we need to generate another otp
+  while(result){
+      otp=otpGenerator.generate(6,{
+          upperCaseAlphabets:false,
+          lowerCaseAlphabets:false,
+          specialChars:false,
+      });    
+      
+  }
+
+  const otpPayload={email,otp};
+
+  //insert the entry in the OTP schema
+
+  const otpBody= await OTP.create(otpPayload);
+  console.log(otpBody);
+
+  res.status(200).json({
+      success:true,
+      message:"Otp sent successfuly",
+      otp,
+  })
+
+  }
+  catch(err){
+      console.log(err.message);
+      res.status(500).json({
+          success:false,
+          message:"some error in otp generation and verification"
+      })
+  }
+};
 
 
 exports.signUp=async(req,res)=>{
@@ -47,6 +113,7 @@ exports.signUp=async(req,res)=>{
         }
 
         //find most recent otp
+        
         const recentOtp=await OTP.findOne({email}).sort({createdAt:-1}).limit(1);
         console.log(recentOtp);
         

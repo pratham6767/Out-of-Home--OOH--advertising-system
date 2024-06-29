@@ -115,7 +115,7 @@ exports.auth=async(req,res,next)=>{
 }
 
 //is student
-exports.isSAdvertiser = async (req, res, next) => {
+exports.isAdvertiser = async (req, res, next) => {
 	try {
 		const userDetails = await User.findOne({ email: req.user.email });
 
