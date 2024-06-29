@@ -18,7 +18,7 @@ const ratingAndReviewSchema = new mongoose.Schema({
 	addspace: {
 		type: mongoose.Schema.Types.ObjectId,
 		required: true,
-		ref: "Addspaces",
+		ref: "Addspace",
 		index: true, 
 	},
 });

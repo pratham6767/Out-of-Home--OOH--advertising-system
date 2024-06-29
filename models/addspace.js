@@ -12,6 +12,12 @@ const addspacesSchema = new mongoose.Schema({
 	location:{
         type:String,
     },
+	height:{
+		type:String
+	},
+	width:{
+		type:String
+	},
     country: { type:String},
 	ratingAndReviews: [
 		{
@@ -43,6 +49,10 @@ const addspacesSchema = new mongoose.Schema({
           required: true
         }
     },
+	soldout:{
+		type:Boolean,
+		default:false
+	},
 	createdAt: {
 		type:Date,
 		default:Date.now

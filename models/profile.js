@@ -12,6 +12,10 @@ const profileSchema = new mongoose.Schema({
 		type: String,
 		trim: true,
 	},
+    paymentpref:{
+        type: String,
+		enum: ["Debit Card", "Credit Card", "Upi"],
+    },
 	contactNumber: {
 		type: Number,
 		trim: true,
