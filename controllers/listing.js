@@ -92,7 +92,7 @@ exports.createLisitng = async (req, res) => {
       // Return success message
       res.status(200).json({
         success: true,
-        data: newCourse,
+        data: listing,
         message: "listing Created Successfully",
       })
     } catch (error) {
