@@ -1,0 +1,53 @@
+const mongoose = require("mongoose");
+
+// Define the Courses schema
+const addspacesSchema = new mongoose.Schema({
+	SpaceName: { type: String },
+	SpaceDescription: { type: String },
+	Owner: {
+		type: mongoose.Schema.Types.ObjectId,
+		required: true,
+		ref: "User",
+	},
+	location:{
+        type:String,
+    },
+    country: { type:String},
+	ratingAndReviews: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "RatingAndReview",
+		},
+	],
+	price: {
+		type: Number,
+        require: true
+	},
+	thumbnail: {
+		type: String,
+	},
+	
+	category: {
+		type: String,
+			enum: ["billboards", "digital screens","transit ads"],
+		    required: true,
+	},
+    geometry: {
+        type: {
+          type: String, // Don't do `{ location: { type: String } }`
+          enum: ['Point'], // 'location.type' must be 'Point'
+          required: true
+          },
+        coordinates: {
+          type: [Number],
+          required: true
+        }
+    },
+	createdAt: {
+		type:Date,
+		default:Date.now
+	},
+});
+
+// Export the Courses model
+module.exports = mongoose.model("Addspace", addspacesSchema);
