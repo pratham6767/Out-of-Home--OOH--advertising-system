@@ -1,8 +1,5 @@
 const User = require("../models/User")
 const Addspace = require("../models/addspace")
-const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
-const mapToken=process.env.MAP_TOKEN;
-const geocodingClient = mbxGeocoding({ accessToken: mapToken });
 const { uploadImageToCloudinary } = require("../utils/imageUploader")
 //create listing
 
