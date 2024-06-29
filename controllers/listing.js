@@ -3,6 +3,7 @@ const Addspace = require("../models/addspace")
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapToken=process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({ accessToken: mapToken });
+const { uploadImageToCloudinary } = require("../utils/imageUploader")
 //create listing
 
 exports.createLisitng = async (req, res) => {
@@ -55,13 +56,7 @@ exports.createLisitng = async (req, res) => {
       console.log(thumbnailImage)
 
 
-      //geeting geo location
-      let response=await geocodingClient
-        .forwardGeocode({
-            query:req.body.listing.location,
-            limit:1,
-        })
-        .send()
+      
 
 
       // Create a new listing with the given details
@@ -77,7 +72,7 @@ exports.createLisitng = async (req, res) => {
         category,
         location,
         thumbnail: thumbnailImage.secure_url,
-        geometry:response.body.features[0].geometry
+        
         
       })
   

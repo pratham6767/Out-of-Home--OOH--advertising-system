@@ -6,7 +6,7 @@ const{createLisitng,getAllListings,getIndividualListing,destroyListing}=require(
 
 const {createRating,getAverageRating,} = require("../controllers/RatingAndReview")
 
-const { auth, isAdvertiser,isAddspaceowner, isAdmin } = require("../middlewares/Auth")
+const { auth,isAddspaceowner } = require("../middlewares/Auth")
 
 
 router.post("/createListing", auth, isAddspaceowner, createLisitng)

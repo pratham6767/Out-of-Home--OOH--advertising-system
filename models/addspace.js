@@ -38,17 +38,6 @@ const addspacesSchema = new mongoose.Schema({
 			enum: ["billboards", "digital screens","transit ads"],
 		    required: true,
 	},
-    geometry: {
-        type: {
-          type: String, // Don't do `{ location: { type: String } }`
-          enum: ['Point'], // 'location.type' must be 'Point'
-          required: true
-          },
-        coordinates: {
-          type: [Number],
-          required: true
-        }
-    },
 	soldout:{
 		type:Boolean,
 		default:false
