@@ -7,7 +7,7 @@ const {cloudinaryConnect } = require("./config/cloudinary.js");
 const fileUpload = require("express-fileupload");
 const dotenv = require("dotenv");
 const bodyParser = require('body-parser')
-
+const Payment =require("./routes/payment.js")
 const userRoutes = require("./routes/User");
 const profileRoutes = require("./routes/Profile");
 // const paymentRoutes = require("./routes/Payments");
